@@ -1,6 +1,8 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
+#!/usr/bin/env python
+# encoding: utf-8
 def config(root,application=None):
-    cine = root.branch('Cineclub')
-    cine.thpage('Proiezioni',table='cine.proiezione')
+    auto = root.branch(u"auto")
+    auto.thpage(u"!!Proiezione", table="cine.proiezione")
+    auto.thpage(u"!!Recensione", table="cine.recensione")
+    auto.thpage(u"!!Socio", table="cine.socio")
+

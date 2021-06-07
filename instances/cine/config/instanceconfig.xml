@@ -1,9 +1,10 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<db dbname="cine"/>
+	<db dbname="cine" implementation="sqlite"/>
 
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>
+		<glbl pkgcode="gnr_it:glbl"/>
 		<gnrcore_adm pkgcode="gnrcore:adm"/>
 		<cine/>
 	</packages>
