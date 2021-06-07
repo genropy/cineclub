@@ -16,12 +16,15 @@ class Table(object):
                                                             mode='foreignkey',
                                                             relation_name='soci')
         tbl.column('immagine', dtype='P', name_long='Immagine')
+        tbl.column('generi_preferiti', name_long='Generi preferiti')
         tbl.column('bio', name_long='Bio')
-        tbl.column('film_id', name_long='ID Film preferito')
-        tbl.column('film_titolo', name_long='Titolo film preferito')
+
+        tbl.column('film_id', name_long='Film preferito id').relation('film.imdb_id',
+                                                                      relation_name='preferito_soci')
         tbl.column('user_id',size='22', group='_', name_long='User').relation('adm.user.id',one_one=True, 
                                                                             relation_name='socio', 
                                                                             mode='foreignkey',
                                                                             onDelete='raise')
+        tbl.aliasColumn('titolo_film_preferito', '@film_id.titolo', name_long='Titolo film preferito')
         tbl.formulaColumn('nome_completo',"$nome || ' ' || $cognome||'('||$nickname||')'")
     
