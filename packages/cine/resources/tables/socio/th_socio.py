@@ -16,9 +16,9 @@ class View(BaseComponent):
         r.fieldcell('provincia')
         r.fieldcell('comune_id')
         r.fieldcell('immagine')
+        r.fieldcell('generi_preferiti')
         r.fieldcell('bio')
         r.fieldcell('film_id')
-        r.fieldcell('film_titolo')
         r.fieldcell('user_id')
 
     def th_order(self):
@@ -33,19 +33,21 @@ class Form(BaseComponent):
 
     def th_form(self, form):
         pane = form.record
-        fb = pane.formbuilder(cols=2, border_spacing='4px')
+        formbox = pane.div(width='90%')
+        fb = formbox.formbuilder(cols=2, border_spacing='4px', fld_width='100%', colswidth='auto', width='100%')
         fb.field('nome')
         fb.field('cognome')
         fb.field('nickname')
+        fb.field('immagine')
         fb.field('data_nascita')
         fb.field('email')
         fb.field('provincia')
         fb.field('comune_id')
-        fb.field('immagine')
-        fb.field('bio')
-        fb.field('film_id')
-        fb.field('film_titolo')
-        fb.field('user_id')
+        fb.field('generi_preferiti', tag='checkboxtext', colspan=2, table='cine.genere', cols=2, popup=True)
+        fb.field('film_id', tag='remoteSelect', method = self.db.table('cine.film').getMovieId, 
+                            auxColumns='title,kind,year')
+        fb.field('bio', colspan=2)
+
 
 
     def th_options(self):

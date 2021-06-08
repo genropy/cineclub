@@ -8,17 +8,15 @@ class View(BaseComponent):
 
     def th_struct(self,struct):
         r = struct.view().rows()
+        r.fieldcell('n_iscrizione')
+        r.fieldcell('proiezione_id')
         r.fieldcell('socio_id')
-        r.fieldcell('testo_recensione')
-        r.fieldcell('titolo_recensione')
-        r.fieldcell('voto')
-        r.fieldcell('film_id')
 
     def th_order(self):
-        return 'socio_id'
+        return 'n_iscrizione'
 
     def th_query(self):
-        return dict(column='socio_id', op='contains', val='')
+        return dict(column='n_iscrizione', op='contains', val='')
 
 
 
@@ -27,11 +25,9 @@ class Form(BaseComponent):
     def th_form(self, form):
         pane = form.record
         fb = pane.formbuilder(cols=2, border_spacing='4px')
+        fb.field('n_iscrizione')
+        fb.field('proiezione_id')
         fb.field('socio_id')
-        fb.field('testo_recensione')
-        fb.field('titolo_recensione')
-        fb.field('voto')
-        fb.field('film_id')
 
 
     def th_options(self):
