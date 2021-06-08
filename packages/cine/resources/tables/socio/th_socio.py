@@ -52,7 +52,7 @@ class Form(BaseComponent):
         fb.field('bio', colspan=2, height='40px')
 
         center = bc.contentPane(region='center')
-        center.dialogTableHandler(relation='@recensioni')
+        center.dialogTableHandler(relation='@recensioni', viewResource='ViewFromSocio')
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px')
