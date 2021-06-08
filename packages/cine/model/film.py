@@ -14,23 +14,9 @@ class Table(object):
         tbl.column('cover_url',  name_long='Url cover')
         tbl.column('dati', dtype='X', name_long='Dati film')
 
-
-    @public_method
-    def getMovieId(self,_querystring=None,**kwargs):
-        ia = IMDb()
-        result = Bag()
-        movies = ia.search_movie(_querystring)
-        for movie in movies:
-            movie_id = movie.movieID
-            title=movie.get('title')
-            year=movie.get('year')
-            result.addItem(movie_id, None, title = title, year = str(year),
-                                kind=movie.get('kind'), cover=movie.get('full-size cover url'), 
-                                _pkey=movie_id, caption='{title} ({year})'.format(title=title, year=year))
-        return result,dict(columns='title,kind,year', headers='Title,Kind,Year')
-
     def insertMovie(self, movie_id):
         pass
 
-    def existMovie(self, movie_id):
-        pass
+    def isIndexed(self, movie_id):
+        result = self.query(where='$imdb_id=:movie_id', movie_id=movie_id).fetch()
+        return bool(result)

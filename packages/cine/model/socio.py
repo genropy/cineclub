@@ -30,7 +30,10 @@ class Table(object):
     
 
     def trigger_onInserting(self, record):
-        pass
+        if record['film_id']:
+            film_tbl = self.db.table('cine.film')
+            if not film_tbl.isIndexed(record['film_id']):
+                film_tbl.insert(record['film_id'])
 
     def trigger_onUpdating(self, record, old_record):
         pass
