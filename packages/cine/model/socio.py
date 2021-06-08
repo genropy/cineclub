@@ -35,7 +35,7 @@ class Table(object):
 
     def cacheMovie(self, record):
         film_tbl = self.db.table('cine.film')
-        if not film_tbl.isIndexed(record['film_id']):
+        if not film_tbl.isCached(record['film_id']):
             film_tbl.insertMovie(record['film_id'])
 
     def trigger_onUpdating(self, record, old_record):

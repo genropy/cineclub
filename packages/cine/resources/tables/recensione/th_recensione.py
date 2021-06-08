@@ -42,12 +42,13 @@ class Form(BaseComponent):
 
     def th_form(self, form):
         pane = form.record
-        fb = pane.formbuilder(cols=2, border_spacing='4px')
-        fb.field('testo_recensione')
-        fb.field('titolo_recensione')
-        fb.field('voto')
+        fb = pane.formbuilder(cols=2, width='500px', border_spacing='4px', fld_width='100%')
         fb.field('film_id', tag='remoteSelect', method=self.db.table('cine.film').imdb_getMovieId, 
-                    auxColumns='title,kind,year', lbl='Titolo Film')
+                    auxColumns='title,year', lbl='Titolo Film', colspan=2)
+        fb.field('titolo_recensione', colspan=2)
+        fb.field('testo_recensione', tag='simpleTextArea', height='200px', colspan=2)
+        fb.field('voto', tag='horizontalSlider', minimum=1, maximum=10, discreteValues=19, intermediateChanges=True)
+        fb.div('^.voto', width='2em')
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px')

@@ -47,7 +47,7 @@ class Form(BaseComponent):
         fb.field('email')
         fb.field('provincia')
         fb.field('comune_id')
-        fb.field('film_id', tag='remoteSelect', method = self.db.table('cine.film').imdb_getMovieId, auxColumns='title,kind,year')
+        fb.field('film_id', tag='remoteSelect', method = self.db.table('cine.film').imdb_getMovieId, auxColumns='title,year')
         fb.field('generi_preferiti', tag='checkboxtext', colspan=2, table='cine.genere', cols=2, popup=True)
         fb.field('bio', colspan=2, height='40px')
 
