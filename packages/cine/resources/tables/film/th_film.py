@@ -8,15 +8,18 @@ class View(BaseComponent):
 
     def th_struct(self,struct):
         r = struct.view().rows()
-        r.fieldcell('imdb_id')
-        r.fieldcell('titolo', width='auto')
-        r.fieldcell('dati')
+        r.fieldcell('imdb_id', width='10em')
+        r.fieldcell('titolo', width='20em')
+    #    r.fieldcell('dati_anno')
+    #    r.fieldcell('dati_genere')
+    #    r.fieldcell('dati_regista')
+    #    r.fieldcell('dati_trama')
 
     def th_order(self):
-        return 'imdb_id'
+        return 'titolo'
 
     def th_query(self):
-        return dict(column='imdb_id', op='contains', val='')
+        return dict(column='titolo', op='contains', val='')
 
 
 
@@ -24,12 +27,12 @@ class Form(BaseComponent):
 
     def th_form(self, form):
         bc = form.center.borderContainer() 
-        top = bc.borderContainer(region='top',datapath='.record',height='180px')
-        top.contentPane(region='right',padding='10px').img(src='^.cover_url',
-                crop_height='150px',
-                crop_width='100px',
-                crop_border='2px dotted silver',
-                crop_rounded=6,edit=True,
+        top = bc.borderContainer(region='center',datapath='.record')
+        top.contentPane(region='right', padding='10px').img(src='^.dati.full-size-cover-url',
+                height='300px',
+                width='220px',
+                border='2px dotted silver',
+                rounded=6,
                 placeholder=True,
                 upload_folder='site:film/cover',
                 upload_filename='=#FORM.record.imdb_id')
@@ -37,7 +40,7 @@ class Form(BaseComponent):
                                                             fld_width='100%', colswidth='auto', width='100%')
         fb.field('imdb_id', readOnly=True)
         fb.field('titolo')
-        fb.tree('^.dati', lbl='Dati film: ', colspan='2')
+        fb.tree(storepath='.dati', lbl='Dati film: ', colspan=2)
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px')

@@ -16,5 +16,5 @@ class Table(object):
         tbl.column('voto', dtype='I', name_long='Voto recensione')
         tbl.column('film_id', name_long='ID Film').relation('film.imdb_id', relation_name='recensioni')
         tbl.aliasColumn('recensore', '@socio_id.nickname', name_long='Nickname recensore', name_short='Recensore')
-        tbl.formulaColumn('caption',"$film_titolo || ' ' || $recensore")
+        tbl.formulaColumn('caption',"@film_id.titolo || ' ' || $recensore")
     

@@ -30,12 +30,15 @@ class Table(object):
     
 
     def trigger_onInserting(self, record):
-        if record['film_id']:
-            film_tbl = self.db.table('cine.film')
-            if not film_tbl.isIndexed(record['film_id']):
-                film_tbl.insert(record['film_id'])
+        if record.get('film_id'):
+            self.cacheMovie(record)
+
+    def cacheMovie(self, record):
+        film_tbl = self.db.table('cine.film')
+        if not film_tbl.isIndexed(record['film_id']):
+            film_tbl.insertMovie(record['film_id'])
 
     def trigger_onUpdating(self, record, old_record):
-        pass
-
+        if record.get('film_id') and record.get('film_id')!=old_record.get('film_id'):
+            self.cacheMovie(record)
 
