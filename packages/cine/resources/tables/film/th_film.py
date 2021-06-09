@@ -11,6 +11,7 @@ class View(BaseComponent):
         r.fieldcell('imdb_id', width='10em')
         r.fieldcell('titolo', width='20em')
         r.fieldcell('anno')
+        r.fieldcell('imdb_rating', width='9em')
         r.fieldcell('genere')
         r.fieldcell('regista')
         r.fieldcell('trama', width='auto')
@@ -27,14 +28,15 @@ class Form(BaseComponent):
         bc = form.center.borderContainer() 
         top = bc.borderContainer(region='top',datapath='.record', height='310px')
         center = top.roundedGroup(region='center', title='Film')
-        fb = center.div(margin='5px', width='90%').formbuilder(cols=1, border_spacing='4px', width='100%')
-        fb.field('imdb_id', readOnly=True, width='10em')
-        fb.field('titolo', readOnly=True, width='30em')
+        fb = center.div(margin='5px', width='90%').formbuilder(cols=2, border_spacing='4px', width='100%', fld_width='100%')
+        fb.field('imdb_id', readOnly=True, colspan=2)
+        fb.field('titolo', readOnly=True, colspan=2)
         fb.field('anno', readOnly=True, format='####', width='5em')
-        fb.field('genere', readOnly=True, width='30em')
-        fb.field('regista', readOnly=True, width='10em')
+        fb.field('imdb_rating', readOnly=True, width='5em')
+        fb.field('genere', readOnly=True, colspan=2)
+        fb.field('regista', readOnly=True, colspan=2)
 
-        right = top.borderContainer(region='right', width='60%')
+        right = top.borderContainer(region='right', width='500px')
         right.roundedGroup(region='center', title='Cast').quickGrid(value='^.cast')
 
         right.contentPane(region='right', width='230px').img(src='^.cover_url',
@@ -53,7 +55,7 @@ class Form(BaseComponent):
         self.altriDati(center.contentPane(title='Altri dati', datapath='.record', padding='5px'))
 
     def tramaBox(self, pane):
-        pane.simpleTextArea('^.trama', width='100%', height='100%')
+        pane.div('^.trama')
 
     def grigliaRecensioni(self, pane):
         pane.dialogTableHandler(relation='@recensioni', addrow=False, delrow=False)

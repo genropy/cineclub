@@ -9,9 +9,8 @@ class Table(object):
         tbl.column('nickname', size=':20', name_long='Nickname', validate_notnull=True, unique=True)    
         tbl.column('data_nascita', dtype='D', name_long='Data nascita')
         tbl.column('email', name_long='Email', validate_notnull=True)
-        tbl.column('provincia', name_long='Provincia').relation('glbl.provincia.sigla', 
-                                                                mode='foreignkey',
-                                                                relation_name='soci')
+        prov = tbl.column('provincia', name_long='Provincia')
+        prov.relation('glbl.provincia.sigla', mode='foreignkey', relation_name='soci')
         tbl.column('comune_id', size='22', name_long='Comune', name_short='Comune').relation('glbl.comune.id',
                                                             mode='foreignkey',
                                                             relation_name='soci')
@@ -25,6 +24,8 @@ class Table(object):
                                                                             relation_name='socio', 
                                                                             mode='foreignkey',
                                                                             onDelete='raise')
+
+        tbl.formulaColumn('eta','extract(YEAR FROM age($data_nascita))', dtype='L' ,name_long=u'!!Età')
         tbl.aliasColumn('titolo_film_preferito', '@film_id.titolo', name_long='Titolo film preferito')
         tbl.formulaColumn('nome_completo',"$nome || ' ' || $cognome||'('||$nickname||')'")
     

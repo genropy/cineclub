@@ -13,12 +13,11 @@ class Table(object):
                                                                         relation_name='recensioni')
         tbl.column('testo_recensione', name_long='Testo recensione', name_short='Testo')
         tbl.column('titolo_recensione', name_long='Titolo recensione', name_short='Titolo')
-        tbl.column('voto', dtype='I', name_long='Voto recensione')
+        tbl.column('voto', dtype='I', name_long='Voto recensione', validate_notnull=True)
         tbl.column('film_id', name_long='ID Film').relation('film.imdb_id', relation_name='recensioni')
         tbl.aliasColumn('recensore', '@socio_id.nickname', name_long='Nickname recensore', name_short='Recensore')
         tbl.aliasColumn('titolo_film', '@film_id.titolo', name_long='Titolo Film', name_short='Film')
-    #    tbl.formulaColumn('caption',"$titolo_film || ' / ' || $recensore")
-    
+
     def trigger_onInserting(self, record):
         if record.get('film_id'):
             self.cacheMovie(record)

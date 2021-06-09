@@ -17,7 +17,12 @@ class Table(object):
         tbl.column('genere', name_long='Genere')
         tbl.column('regista', name_long='Regista')
         tbl.column('trama', name_long='Trama')
+        tbl.column('imdb_rating', dtype='N', name_long='IMDB Rating')
         tbl.column('cast', dtype='X', name_long='Cast')
+        tbl.formulaColumn('club_rating', dtype='N' ,select=dict(table='cine.recensione',
+                                                    columns='AVG($voto)',
+                                                    where='$film_id = #THIS.imdb_id'),
+                                                    name_long='Club rating')
 
     #    tbl.bagItemColumn('anno', dtype='L', bagcolumn='$dati', itempath='year', name_long='Anno')
     #    tbl.bagItemColumn('genere', bagcolumn='$dati', itempath='kind', name_long='Genere')
@@ -28,12 +33,16 @@ class Table(object):
         ia = IMDb()
         movie = ia.get_movie(movie_id)
         movie_data = Bag(movie.asXML())['movie']
-        registi = ','.join(movie_data['directors'].digest('#v.name'))
-        generi = ','.join(movie_data['genres'].digest('#v'))
+        registi = ', '.join(movie_data['directors'].digest('#v.name'))
+        generi = ', '.join(movie_data['genres'].digest('#v'))
         cast = self.preparaCast(cast=movie_data['cast'])
         movie_dict = dict(imdb_id=movie_id, titolo=movie_data['title'], cover_url=movie_data['full-size-cover-url'],
-                                anno=movie_data['year'], genere=generi, cast=cast, 
-                                regista=registi, trama=movie_data['plot-outline'], dati=movie_data)
+                                anno=movie_data['year'], genere=generi,
+                                cast=cast, 
+                                imdb_rating=movie_data['rating'],
+                                regista=registi,
+                                trama=movie_data['plot-outline'], 
+                                dati=movie_data)
         return movie_dict
     
     def preparaCast(self, cast=None):

@@ -11,7 +11,6 @@ class View(BaseComponent):
         r.fieldcell('__ins_ts')
         r.fieldcell('recensore')
         r.fieldcell('titolo_recensione')
-        r.fieldcell('testo_recensione', width='auto')
         r.fieldcell('voto')
 
     def th_order(self):
@@ -26,7 +25,6 @@ class ViewFromSocio(BaseComponent):
         r = struct.view().rows()
         r.fieldcell('__ins_ts')
         r.fieldcell('titolo_recensione')
-        r.fieldcell('testo_recensione')
         r.fieldcell('voto')
         r.fieldcell('titolo_film')
 
@@ -41,14 +39,20 @@ class ViewFromSocio(BaseComponent):
 class Form(BaseComponent):
 
     def th_form(self, form):
-        pane = form.record
-        fb = pane.formbuilder(cols=2, width='500px', border_spacing='4px', fld_width='100%')
-        fb.field('film_id', tag='remoteSelect', method=self.db.table('cine.film').imdb_getMovieId, 
-                    auxColumns='title,year', lbl='Titolo Film', colspan=2)
-        fb.field('titolo_recensione', colspan=2)
-        fb.field('testo_recensione', tag='simpleTextArea', height='200px', colspan=2)
-        fb.field('voto', tag='horizontalSlider', minimum=1, maximum=10, discreteValues=19, intermediateChanges=True)
-        fb.div('^.voto', width='2em')
+        bc = form.center.borderContainer()
+        top = bc.contentPane(region='top')
+        fb = top.formbuilder(cols=3,width='90%', border_spacing='4px', datapath='.record')
+        fb.field('titolo_recensione', lbl='Titolo recensione', width='30em')
+        fb.field('voto', lbl='Voto', validate_min=1,
+                validate_max=10, width='3em',
+                validate_max_error='Voto da 1 a 10',
+                default=6)
+
+        testo_box = bc.contentPane(region='center', datapath='.record').div( overflow='hidden')
+        testo_box.ckeditor(value='^.testo_recensione')
 
     def th_options(self):
-        return dict(dialog_height='400px', dialog_width='600px')
+        return dict(dialog_parentRatio=.9, modal=True, defaultPrompt=dict(title="Nuova Recensione", doSave=True, 
+                            fields=[dict(value='^.film_id', lbl='Film', tag='remoteSelect', 
+                                            method='_table.cine.film.imdb_getMovieId', 
+                                            auxColumns='title,year')]))

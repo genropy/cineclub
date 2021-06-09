@@ -12,7 +12,7 @@ class View(BaseComponent):
         r.fieldcell('nickname')
         r.fieldcell('data_nascita')
         r.fieldcell('provincia')
-        r.fieldcell('email', width='auto')
+        r.fieldcell('email', width='15em')
         r.fieldcell('generi_preferiti')
         r.fieldcell('film_id')
         r.fieldcell('user_id')
@@ -22,8 +22,6 @@ class View(BaseComponent):
 
     def th_query(self):
         return dict(column='cognome', op='contains', val='')
-
-
 
 class Form(BaseComponent):
 
@@ -56,4 +54,3 @@ class Form(BaseComponent):
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px')
-
