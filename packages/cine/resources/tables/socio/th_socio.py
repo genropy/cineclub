@@ -7,15 +7,17 @@ class View(BaseComponent):
 
     def th_struct(self,struct):
         r = struct.view().rows()
-        r.fieldcell('nome')
-        r.fieldcell('cognome')
         r.fieldcell('nickname')
-        r.fieldcell('data_nascita')
-        r.fieldcell('provincia')
-        r.fieldcell('email', width='15em')
-        r.fieldcell('generi_preferiti')
-        r.fieldcell('n_recensioni')
-        r.fieldcell('film_id')
+        anag = r.columnset('anag', name='DATI PERSONALI', color='white', font_weight='bold', background='darkblue')
+        anag.fieldcell('nome')
+        anag.fieldcell('cognome')
+        anag.fieldcell('data_nascita')
+        anag.fieldcell('provincia')
+        anag.fieldcell('email', width='15em')
+        cine = r.columnset('cine', name='GUSTI CINEMATOGRAFICI', color='white', font_weight='bold', background='darkgreen')
+        cine.fieldcell('generi_preferiti')
+        cine.fieldcell('n_recensioni')
+        cine.fieldcell('film_id', width='auto')
         #r.fieldcell('user_id')
 
     def th_order(self):
