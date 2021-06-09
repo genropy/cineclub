@@ -25,11 +25,12 @@ class Table(object):
                                                                             mode='foreignkey',
                                                                             onDelete='raise')
 
-        tbl.formulaColumn('eta','extract(YEAR FROM age($data_nascita))', dtype='L' ,name_long=u'!!Età')
         tbl.aliasColumn('titolo_film_preferito', '@film_id.titolo', name_long='Titolo film preferito')
         tbl.formulaColumn('nome_completo',"$nome || ' ' || $cognome||'('||$nickname||')'")
-    
-
+        tbl.formulaColumn('n_recensioni', dtype='L' ,select=dict(table='cine.recensione',
+                                                    columns='COUNT(*)',
+                                                    where='$socio_id = #THIS.id'),
+                                                    name_long='N.Recensioni')
     def trigger_onInserting(self, record):
         if record.get('film_id'):
             self.cacheMovie(record)

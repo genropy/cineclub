@@ -36,7 +36,7 @@ class Form(BaseComponent):
         fb.field('genere', readOnly=True, colspan=2)
         fb.field('regista', readOnly=True, colspan=2)
 
-        right = top.borderContainer(region='right', width='500px')
+        right = top.borderContainer(region='right', width='550px')
         right.roundedGroup(region='center', title='Cast').quickGrid(value='^.cast')
 
         right.contentPane(region='right', width='230px').img(src='^.cover_url',

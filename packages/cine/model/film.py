@@ -24,11 +24,6 @@ class Table(object):
                                                     where='$film_id = #THIS.imdb_id'),
                                                     name_long='Club rating')
 
-    #    tbl.bagItemColumn('anno', dtype='L', bagcolumn='$dati', itempath='year', name_long='Anno')
-    #    tbl.bagItemColumn('genere', bagcolumn='$dati', itempath='kind', name_long='Genere')
-    #    tbl.bagItemColumn('regista', bagcolumn='$dati', itempath='directors.person.name', name_long='Regista')
-    #    tbl.bagItemColumn('trama', bagcolumn='$dati', itempath='plot-outline', name_long='Trama')
-
     def imdb_getMovieData(self, movie_id=None):
         ia = IMDb()
         movie = ia.get_movie(movie_id)
@@ -47,10 +42,21 @@ class Table(object):
     
     def preparaCast(self, cast=None):
         result=Bag()
-        for person in cast.values():
+        cast_max = self.db.application.getPreference('cast_max', pkg='cine') or 50
+        for person in cast.values()[:cast_max]:
             result.addItem('p', None, name=person['name'], character=person['current-role.character.name'])
         return result
-        
+
+    #SE VOLESSIMO ESPLODERE IL CAST SU TABELLE DB    
+    #def creaCast(self,  movie_id=None, cast=None):
+    #    cast_tbl = self.db.table('cine.cast')
+    #    person_tbl = self.db.table('cine.person')
+    #    for person in cast:
+    #        p = person.getValue()
+    #        attrs = person.attr
+    #        cast_tbl.insert( film_id=movie_id, person_id=attrs['id'], character_name=p['current-role.character.name'])
+
+
     def insertMovie(self, movie_id=None):
         movie_rec = self.imdb_getMovieData(movie_id=movie_id)
         self.insert(movie_rec)

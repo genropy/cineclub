@@ -14,8 +14,9 @@ class View(BaseComponent):
         r.fieldcell('provincia')
         r.fieldcell('email', width='15em')
         r.fieldcell('generi_preferiti')
+        r.fieldcell('n_recensioni')
         r.fieldcell('film_id')
-        r.fieldcell('user_id')
+        #r.fieldcell('user_id')
 
     def th_order(self):
         return 'cognome'

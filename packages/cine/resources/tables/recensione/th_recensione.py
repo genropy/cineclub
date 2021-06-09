@@ -52,7 +52,7 @@ class Form(BaseComponent):
         testo_box.ckeditor(value='^.testo_recensione')
 
     def th_options(self):
-        return dict(dialog_parentRatio=.9, modal=True, defaultPrompt=dict(title="Nuova Recensione", doSave=True, 
-                            fields=[dict(value='^.film_id', lbl='Film', tag='remoteSelect', 
+        return dict(dialog_parentRatio=.9, modal=True, defaultPrompt = dict(title="Nuova Recensione", doSave=True, 
+                            fields=[dict(value='^.film_id', lbl='Film', tag='remoteSelect', width='20em',
                                             method='_table.cine.film.imdb_getMovieId', 
                                             auxColumns='title,year')]))
